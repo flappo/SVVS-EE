@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://81.89.102.206:3306/c1teamd?zeroDateTimeBehavior=convertToNull</property>
+    <!-- &autoReconnect=true-->
+    <property name="hibernate.connection.username">c1teamd</property>
+    <property name="hibernate.connection.password">pwdteamd</property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.transaction.auto_close_session">true</property>
+    <!--<property name="hibernate.c3p0.timeout">1800</property>   -->
+    <mapping resource="data/mapping/Address.hbm.xml"/>
+    <mapping resource="data/mapping/Contribution.hbm.xml"/>
+    <mapping resource="data/mapping/Country.hbm.xml"/>
+    <mapping resource="data/mapping/Department.hbm.xml"/>
+    <mapping resource="data/mapping/League.hbm.xml"/>
+    <mapping resource="data/mapping/Right.hbm.xml"/>
+    <mapping resource="data/mapping/Sport.hbm.xml"/>
+    <mapping resource="data/mapping/Team.hbm.xml"/>
+    <mapping resource="data/mapping/Tournament.hbm.xml"/>
+    <mapping resource="data/mapping/ContributionHistory.hbm.xml"/>
+    <mapping resource="data/mapping/Match.hbm.xml"/>
+    <mapping resource="data/mapping/Person.hbm.xml"/>
+    <mapping resource="data/mapping/Role.hbm.xml"/>
+    <mapping resource="data/mapping/RoleRights.hbm.xml"/>
+    <mapping resource="data/mapping/SportsmanTrainingTeam.hbm.xml"/>
+    <mapping resource="data/mapping/TouramentInvite.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
