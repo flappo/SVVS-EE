@@ -91,4 +91,5 @@ public class ControllerFactory implements ControllerFactoryRemote {
     public IMessageController getMessageController() throws RemoteException, Exception {
         return MessageController.getInstance();
     }
+
 }
