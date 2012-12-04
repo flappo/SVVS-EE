@@ -40,7 +40,7 @@ public class PlayerToTeamTeamLoadState extends AController implements IPlayerToT
     @Override
     public LinkedList<ITrainingTeamDTO> loadTeams(String sportname) throws RemoteException {
         _context.setState(new PlayerToTeamLoadPlayersOfTeam(_context));
-        return TeamController.getInstance().loadTrainingTeams(sportname);
+        return TeamController.getInstance().loadTrainingTeamsWithSport(sportname);
     }
 
     @Override
