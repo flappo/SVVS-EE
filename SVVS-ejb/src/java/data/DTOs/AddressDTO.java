@@ -5,6 +5,7 @@
 package data.DTOs;
 
 import data.models.IAddress;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,12 +68,12 @@ public class AddressDTO extends AbstractDTO<IAddress> implements IAddressDTO {
     }
 
     @Override
-    public void setCity(String city)throws RemoteException  {
+    public void setCity(String city) throws RemoteException {
         this.city = city;
     }
 
     @Override
-    public String getCity()throws RemoteException  {
+    public String getCity() throws RemoteException {
         return this.city;
     }
 
@@ -86,8 +87,9 @@ public class AddressDTO extends AbstractDTO<IAddress> implements IAddressDTO {
         return this.country;
     }
 
+    
     @Override
-    public String toString() {
+    public String toString(){
         try {
             return street + ", " + postcode + " " + city + ", " + country.getName();
         } catch (RemoteException ex) {

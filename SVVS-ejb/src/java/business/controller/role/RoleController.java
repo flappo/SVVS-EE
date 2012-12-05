@@ -5,6 +5,7 @@
 package business.controller.role;
 
 import business.AController;
+import com.sun.corba.se.impl.corba.CORBAObjectImpl;
 import data.DAOs.AdministratorDAO;
 import data.DAOs.CaretakerDAO;
 import data.DAOs.CoachDAO;
@@ -37,6 +38,10 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
+import javax.ejb.EJBHome;
+import javax.ejb.EJBObject;
+import javax.ejb.Handle;
+import javax.ejb.RemoveException;
 import org.hibernate.Hibernate;
 import org.hibernate.Transaction;
 
@@ -88,10 +93,10 @@ public class RoleController extends AController implements IRoleController {
      PersonDAO.getInstance().update(HibernateUtil.getCurrentSession(), person);
      }*/
     @Override
-    public void EditPersonRole(IPersonDTO person, List<IRoleRightsDTO> roles, IDepartmentDTO department, ISportDTO sport) throws RemoteException {
+    public void EditPersonRole(IPersonDTO person, IRoleRightsDTO roles, IDepartmentDTO department, ISportDTO sport) throws RemoteException {
         Transaction tx = HibernateUtil.getCurrentSession().beginTransaction();
         IPerson p = PersonDAO.getInstance().getById(HibernateUtil.getCurrentSession(), person.getId());
-        IRoleRights r = RoleRightsDAO.getInstance().getById(HibernateUtil.getCurrentSession(), roles.get(0).getId());
+
         IDepartment d = null;
         if (department != null) {
             d = DepartmentDAO.getInstance().getById(HibernateUtil.getCurrentSession(), department.getId());
@@ -101,8 +106,10 @@ public class RoleController extends AController implements IRoleController {
         if (sport != null) {
             s = SportDAO.getInstance().getById(HibernateUtil.getCurrentSession(), sport.getId());
         }
-
-        for (IRoleRightsDTO iRRD : roles) {
+        IRoleRights r = RoleRightsDAO.getInstance().getById(HibernateUtil.getCurrentSession(), roles.getId());
+        List<IRoleRightsDTO> irrl = new LinkedList<IRoleRightsDTO>();
+        irrl.add(roles);
+        for (IRoleRightsDTO iRRD : irrl) {
             IRole temp = null;
             if (iRRD.getName().equals("Manager")) {
                 temp = ManagerDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d);
@@ -150,60 +157,60 @@ public class RoleController extends AController implements IRoleController {
                     CaretakerDAO.getInstance().add(HibernateUtil.getCurrentSession(), caretaker);
                 }
             }
-           /* switch (iRRD.getName()) {
-                case "Manager":
-                    temp = ManagerDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d);
-                    if (temp == null) {
-                        IManager manager = ManagerDAO.getInstance().create();
-                        manager.setPerson(p);
-                        manager.setDepartment(d);
-                        manager.setRoleRight(r);
-                        ManagerDAO.getInstance().add(HibernateUtil.getCurrentSession(), manager);
-                    }
-                    break;
-                case "Sportler":
-                    temp = SportsmanDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d, s);
-                    if (temp == null) {
-                        ISportsman sportsman = SportsmanDAO.getInstance().create();
-                        sportsman.setPerson(p);
-                        sportsman.setDepartment(d);
-                        sportsman.setSport(s);
-                        sportsman.setRoleRight(r);
-                        SportsmanDAO.getInstance().add(HibernateUtil.getCurrentSession(), sportsman);
-                    }
-                    break;
-                case "Trainer":
-                    temp = CoachDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d, s);
-                    if (temp == null) {
-                        ICoach coach = CoachDAO.getInstance().create();
-                        coach.setPerson(p);
-                        coach.setDepartment(d);
-                        coach.setSport(s);
-                        coach.setRoleRight(r);
-                        CoachDAO.getInstance().add(HibernateUtil.getCurrentSession(), coach);
-                    }
-                    break;
-                case "Admin":
-                    temp = AdministratorDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p);
-                    if (temp == null) {
-                        IAdministrator administrator = AdministratorDAO.getInstance().create();
-                        administrator.setPerson(p);
-                        administrator.setRoleRight(r);
-                        AdministratorDAO.getInstance().add(HibernateUtil.getCurrentSession(), administrator);
-                    }
-                    break;
-                case "Verwalter":
-                    temp = CaretakerDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p);
-                    if (temp == null) {
-                        ICaretaker caretaker = CaretakerDAO.getInstance().create();
-                        caretaker.setPerson(p);
-                        caretaker.setRoleRight(r);
-                        CaretakerDAO.getInstance().add(HibernateUtil.getCurrentSession(), caretaker);
-                    }
-                    break;
-                default:
-                    break;
-            }*/
+            /* switch (iRRD.getName()) {
+             case "Manager":
+             temp = ManagerDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d);
+             if (temp == null) {
+             IManager manager = ManagerDAO.getInstance().create();
+             manager.setPerson(p);
+             manager.setDepartment(d);
+             manager.setRoleRight(r);
+             ManagerDAO.getInstance().add(HibernateUtil.getCurrentSession(), manager);
+             }
+             break;
+             case "Sportler":
+             temp = SportsmanDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d, s);
+             if (temp == null) {
+             ISportsman sportsman = SportsmanDAO.getInstance().create();
+             sportsman.setPerson(p);
+             sportsman.setDepartment(d);
+             sportsman.setSport(s);
+             sportsman.setRoleRight(r);
+             SportsmanDAO.getInstance().add(HibernateUtil.getCurrentSession(), sportsman);
+             }
+             break;
+             case "Trainer":
+             temp = CoachDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p, d, s);
+             if (temp == null) {
+             ICoach coach = CoachDAO.getInstance().create();
+             coach.setPerson(p);
+             coach.setDepartment(d);
+             coach.setSport(s);
+             coach.setRoleRight(r);
+             CoachDAO.getInstance().add(HibernateUtil.getCurrentSession(), coach);
+             }
+             break;
+             case "Admin":
+             temp = AdministratorDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p);
+             if (temp == null) {
+             IAdministrator administrator = AdministratorDAO.getInstance().create();
+             administrator.setPerson(p);
+             administrator.setRoleRight(r);
+             AdministratorDAO.getInstance().add(HibernateUtil.getCurrentSession(), administrator);
+             }
+             break;
+             case "Verwalter":
+             temp = CaretakerDAO.getInstance().getByAll(HibernateUtil.getCurrentSession(), p);
+             if (temp == null) {
+             ICaretaker caretaker = CaretakerDAO.getInstance().create();
+             caretaker.setPerson(p);
+             caretaker.setRoleRight(r);
+             CaretakerDAO.getInstance().add(HibernateUtil.getCurrentSession(), caretaker);
+             }
+             break;
+             default:
+             break;
+             }*/
         }
         tx.commit();
     }
@@ -228,11 +235,36 @@ public class RoleController extends AController implements IRoleController {
 
     public List<IRoleDTO> getRole(IPersonDTO person, String rolename) throws RemoteException {
         List<IRoleDTO> roles = new LinkedList<IRoleDTO>();
-           for (IRoleDTO role : loadRolesOfPerson(person)) {
+        for (IRoleDTO role : loadRolesOfPerson(person)) {
             if (role.getRoleRight().getName().equals(rolename)) {
                 roles.add(role);
-            } 
+            }
         }
         return roles;
+    }
+
+    @Override
+    public EJBHome getEJBHome() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Object getPrimaryKey() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void remove() throws RemoteException, RemoveException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Handle getHandle() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isIdentical(EJBObject obj) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

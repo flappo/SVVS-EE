@@ -66,19 +66,25 @@ public class PlayerToTeam extends AController implements IPlayerToTeam {
 //        return  _state.loadSportsman(sportname);
 //    }
     @Override
-    public LinkedList<ISportsmanDTO> loadSportsman(String sportname, List<ISportsmanDTO> ignoreList) throws RemoteException {
+    public LinkedList<ISportsmanDTO> loadSportsman(String sportname/*, List<ISportsmanDTO> ignoreList*/) throws RemoteException {
 
         LinkedList<ISportsmanDTO> sportsmen = new LinkedList<ISportsmanDTO>();
         
-        for (ISportsman iS : SportsmanDAO.getInstance().getAll(HibernateUtil.getCurrentSession())) {
+       /* for (ISportsman iS : SportsmanDAO.getInstance().getAll(HibernateUtil.getCurrentSession())) {
             if (iS.getSport().getName().equals(sportname)) {
                 sportsmen.add(new SportsmanDTO(iS));
             }
+        }*/
+        
+        for (ISportsmanDTO isdto : SportsmanDAO.getInstance().getAllDTO(HibernateUtil.getCurrentSession())) {
+             if (isdto.getSport().getName().equals(sportname)) {
+                sportsmen.add(isdto);
+            }
         }
 
-        for (ISportsmanDTO dto : ignoreList) {
+        /*for (ISportsmanDTO dto : ignoreList) {
             sportsmen.remove(dto);
-        }
+        }*/
         //_context.setState(new PlayerToTeamState(_context));
         return sportsmen;
     }

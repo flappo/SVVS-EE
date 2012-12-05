@@ -33,7 +33,7 @@ public class EditPersonRoleState extends AController implements IEditPersonRoleS
     }
 
     @Override
-    public void EditPersonRole(IPersonDTO person, List<IRoleRightsDTO> roles, IDepartmentDTO department, ISportDTO sport) throws  RemoteException{
+    public void EditPersonRole(IPersonDTO person, IRoleRightsDTO roles, IDepartmentDTO department, ISportDTO sport) throws  RemoteException{
         RoleController.getInstance().EditPersonRole(person, roles, department, sport);
     }
 
