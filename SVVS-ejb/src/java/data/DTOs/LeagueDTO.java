@@ -56,4 +56,11 @@ public class LeagueDTO extends AbstractDTO<ILeague> implements ILeagueDTO {
         }
         return null;
     }
+
+    @Override
+    public String getValues() throws RemoteException {
+        return this.getName();
+    }
+    
+    
 }

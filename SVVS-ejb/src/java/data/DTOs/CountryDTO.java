@@ -67,4 +67,11 @@ public class CountryDTO extends AbstractDTO<ICountry> implements ICountryDTO{
         return null;
     }
 
+    @Override
+    public String getValues() throws RemoteException {
+        return getName();
+    }
+    
+    
+
 }

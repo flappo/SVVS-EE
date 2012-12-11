@@ -47,6 +47,18 @@ public class SportsmanDTO extends AbstractRoleDTO<ISportsman> implements ISports
     }
 
     @Override
+    public String getValues() throws RemoteException {
+        try {
+            return person.getLastname() + " " + person.getFirstname();
+        } catch (RemoteException ex) {
+            Logger.getLogger(SportsmanDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
+    
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof ISportsmanDTO)) {
             return false;
@@ -60,4 +72,6 @@ public class SportsmanDTO extends AbstractRoleDTO<ISportsman> implements ISports
         }
         return false;
     }
+
+ 
 }

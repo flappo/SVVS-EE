@@ -97,4 +97,14 @@ public class AddressDTO extends AbstractDTO<IAddress> implements IAddressDTO {
         }
         return null;
     }
+    
+    @Override
+     public String getValues() throws RemoteException{
+        try {
+            return street + ", " + postcode + " " + city + ", " + country.getName();
+        } catch (RemoteException ex) {
+            Logger.getLogger(AddressDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

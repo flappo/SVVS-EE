@@ -47,6 +47,18 @@ public class TeamDTO extends AbstractTeamDTO<ITeam> implements ITeamDTO {
     }
 
     @Override
+    public String getValues() throws RemoteException {
+         try {
+            return getName();
+        } catch (RemoteException ex) {
+            Logger.getLogger(TeamDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
+    
+    @Override
     public ILeagueDTO getLeague() throws RemoteException{
         return league;
     }

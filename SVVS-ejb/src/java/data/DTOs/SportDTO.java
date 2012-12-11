@@ -81,6 +81,17 @@ public class SportDTO extends AbstractDTO<ISport> implements ISportDTO {
     }
 
     @Override
+    public String getValues() throws RemoteException {
+         try {
+            return getName();
+        } catch (RemoteException ex) {
+            Logger.getLogger(SportDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
+    @Override
     public boolean equals(Object obj) {
         try {
             if (((ISportDTO) obj).getName().equals(this.getName())) {

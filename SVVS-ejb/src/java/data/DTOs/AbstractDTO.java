@@ -28,4 +28,9 @@ public abstract class AbstractDTO<V extends IModel> extends PortableRemoteObject
 
     @Override
     public abstract void extract(V model) throws RemoteException;
+    
+    @Override
+    public String getValues() throws RemoteException {
+        return this.toString();
+    }
 }

@@ -66,4 +66,11 @@ public class ContributionDTO extends AbstractDTO<IContribution> implements ICont
         return null;
     }
 
+    @Override
+    public String getValues() throws RemoteException {
+        return getName();
+    }
+    
+    
+
 }

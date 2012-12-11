@@ -69,6 +69,12 @@ public class DepartmentDTO extends AbstractDTO<IDepartment> implements IDepartme
     }
 
     @Override
+    public String getValues() throws RemoteException {
+        return this.getName();
+    }
+
+    
+    @Override
     public List<ISportDTO> getSports()throws RemoteException {
         return sports;
     }

@@ -94,6 +94,12 @@ public class PersonDTO extends AbstractDTO<IPerson> implements IPersonDTO {
         return null;
     }
 
+    @Override
+    public String getValues() throws RemoteException {
+        return getFirstname() + " " + getLastname();
+    }
+
+    
     
     @Override
     public String getFirstname() throws RemoteException{

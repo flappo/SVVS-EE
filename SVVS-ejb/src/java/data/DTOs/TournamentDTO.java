@@ -158,6 +158,17 @@ public class TournamentDTO extends AbstractDTO<ITournament> implements ITourname
         }
         return null;
     }
+
+    @Override
+    public String getValues() throws RemoteException {
+         try {
+            return getName();
+        } catch (RemoteException ex) {
+            Logger.getLogger(TournamentDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     
     
     

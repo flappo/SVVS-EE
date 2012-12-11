@@ -67,4 +67,16 @@ public class RoleRightsDTO extends AbstractDTO<IRoleRights> implements IRoleRigh
         }
         return null;
     }
+
+    @Override
+    public String getValues() throws RemoteException {
+        try {
+            return getName();
+        } catch (RemoteException ex) {
+            Logger.getLogger(RoleRightsDTO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
 }
