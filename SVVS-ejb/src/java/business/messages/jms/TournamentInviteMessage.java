@@ -18,6 +18,7 @@ public class TournamentInviteMessage implements ITournamentInviteMessage {
     private ISportsmanDTO sportsman;
     private ITournamentDTO tournament;
     private ITrainingTeamDTO team;
+     private String receiver;
 
     public TournamentInviteMessage(ISportsmanDTO sportsman, ITournamentDTO tournament, ITrainingTeamDTO team) {
         this.sportsman = sportsman;
@@ -43,5 +44,15 @@ public class TournamentInviteMessage implements ITournamentInviteMessage {
     @Override
     public String getText() {
         return "Sie wurden mit dem Team " + getTeam() +" zum Wettkampf " + getTournament() + " eingeladen!";
+    }
+    
+    @Override
+    public String getReceiver() {
+        return receiver;
+    }
+
+    @Override
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }

@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class SportsmanCreatedMessage implements ISportsmanCreatedMessage {
 
     private ISportsmanDTO sportsman;
+             private String receiver;
     
     public SportsmanCreatedMessage(ISportsmanDTO sportsman) {
         this.sportsman = sportsman;
@@ -35,6 +36,16 @@ public class SportsmanCreatedMessage implements ISportsmanCreatedMessage {
             Logger.getLogger(SportsmanCreatedMessage.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    @Override
+    public String getReceiver() {
+        return receiver;
+    }
+
+    @Override
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
     
 }

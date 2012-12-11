@@ -19,7 +19,7 @@ public class SportsmanAssignedMessage implements ISportsmanAssignedMessage{
 
     private ISportsmanDTO sportsman;
     private ITrainingTeamDTO team;
-    
+    private String receiver;
     
     public SportsmanAssignedMessage(ITrainingTeamDTO team, ISportsmanDTO sportsman) {
         
@@ -51,6 +51,16 @@ public class SportsmanAssignedMessage implements ISportsmanAssignedMessage{
             Logger.getLogger(SportsmanAssignedMessage.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public String getReceiver() {
+        return receiver;
+    }
+
+    @Override
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
     
 }
