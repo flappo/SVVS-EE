@@ -15,6 +15,7 @@ import data.DTOs.IDepartmentDTO;
 import data.DTOs.ISportDTO;
 import data.DTOs.ITeamDTO;
 import data.DTOs.ITournamentDTO;
+import data.DTOs.TournamentDTO;
 import data.models.ISport;
 import data.models.ITeam;
 import data.models.ITournament;
@@ -45,13 +46,13 @@ public class TournamentController extends AController implements ITournamentCont
     public LinkedList<ISportDTO> loadSport(List<IDepartmentDTO> department) throws RemoteException {
         DepartmentController deptCon = DepartmentController.getInstance();
         LinkedList<ISportDTO> sports = new LinkedList<ISportDTO>();
-        
-        for(ISportDTO iS : SportDAO.getInstance().getAllDTO(HibernateUtil.getCurrentSession())) {
-            if(department == null) {
+
+        for (ISportDTO iS : SportDAO.getInstance().getAllDTO(HibernateUtil.getCurrentSession())) {
+            if (department == null) {
                 sports.add(iS);
             } else {
-                for(IDepartmentDTO dept : department) {
-                    if(deptCon.isSportInDepartment(dept, iS)) {
+                for (IDepartmentDTO dept : department) {
+                    if (deptCon.isSportInDepartment(dept, iS)) {
                         sports.add(iS);
                     }
                 }
@@ -86,6 +87,15 @@ public class TournamentController extends AController implements ITournamentCont
         }
         return null;
     }
-    
-    
+
+    @Override
+    public ITournamentDTO loadTournamentDTO(int ID) throws RemoteException {
+        List<ITournament> tournaments = TournamentDAO.getInstance().getAll(HibernateUtil.getCurrentSession());
+        for (ITournament iT : tournaments) {
+            if (iT.getTournamentID() == ID) {
+                return new TournamentDTO(iT); 
+            }
+        }
+        return null;
+    }
 }
