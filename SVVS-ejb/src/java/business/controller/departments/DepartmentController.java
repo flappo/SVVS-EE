@@ -6,15 +6,19 @@ package business.controller.departments;
 
 import business.AController;
 import data.DAOs.DepartmentDAO;
+import data.DAOs.SportDAO;
 import data.DTOs.DepartmentDTO;
 import data.DTOs.IDepartmentDTO;
 import data.DTOs.ISportDTO;
+import data.DTOs.SportDTO;
 import data.hibernate.HibernateUtil;
+import data.models.Department;
 import data.models.IDepartment;
-import java.rmi.Remote;
+import data.models.ISport;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -55,5 +59,22 @@ public class DepartmentController extends AController implements IDepartmentCont
         
         return false;
         
+    }
+    
+    @Override
+    public boolean isSportInDepartmentID(int departmentId, int sportId) throws RemoteException {
+        
+        Session s = HibernateUtil.getCurrentSession();
+        
+        IDepartment dept = DepartmentDAO.getInstance().getById(s, departmentId);
+        ISport sport = SportDAO.getInstance().getById(s, sportId);
+        
+        for(ISport ss : dept.getSports()) {
+            if(ss.getName().equals(sport.getName())) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

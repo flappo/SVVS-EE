@@ -137,10 +137,16 @@ public class TeamController extends AController implements ITeamController {
 
     @Override
     public List<ISportsmanTrainingTeamDTO> loadAssignedPlayersOfTeam(ITournamentDTO tournament, ITeamDTO team) throws RemoteException {
-
         Session s = HibernateUtil.getCurrentSession();
         ITournament t = TournamentDAO.getInstance().getById(s, tournament.getId());
         ITrainingTeam tt = TrainingTeamDAO.getInstance().getById(s, team.getId());
+        return loadAssignedPlayersOfTeamHelper(t, tt);
+    }
+
+    private List<ISportsmanTrainingTeamDTO> loadAssignedPlayersOfTeamHelper(ITournament t, ITrainingTeam tt) throws RemoteException {
+
+        Session s = HibernateUtil.getCurrentSession();
+
         List<ISportsmanTrainingTeamDTO> stt = new LinkedList<ISportsmanTrainingTeamDTO>();
 
         if (tt == null) {
@@ -155,5 +161,13 @@ public class TeamController extends AController implements ITeamController {
 
         return stt;
 
+    }
+
+    @Override
+    public List<ISportsmanTrainingTeamDTO> loadAssignedPlayersOfTeamID(int tournamentID, int teamID) throws RemoteException {
+        Session s = HibernateUtil.getCurrentSession();
+        ITournament t = TournamentDAO.getInstance().getById(s, tournamentID);
+        ITrainingTeam tt = TrainingTeamDAO.getInstance().getById(s, teamID);
+        return loadAssignedPlayersOfTeamHelper(t, tt);
     }
 }
